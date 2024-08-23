@@ -25,4 +25,12 @@ public class PacienteService {
     public List<Paciente> buscarTodos(){
         return pacienteIDao.listaTodos();
     }
+
+
+    public void eliminarPaciente(Integer id){
+    }
+
+    public Paciente modificarPaciente(Paciente paciente){
+        return null;
+    }
 }
