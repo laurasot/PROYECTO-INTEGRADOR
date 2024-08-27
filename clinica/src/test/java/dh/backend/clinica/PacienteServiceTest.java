@@ -5,7 +5,7 @@ import dh.backend.clinica.dao.impl.DaoH2Paciente;
 import dh.backend.clinica.db.H2Connection;
 import dh.backend.clinica.model.Domicilio;
 import dh.backend.clinica.model.Paciente;
-import dh.backend.clinica.service.PacienteService;
+import dh.backend.clinica.service.impl.PacienteService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

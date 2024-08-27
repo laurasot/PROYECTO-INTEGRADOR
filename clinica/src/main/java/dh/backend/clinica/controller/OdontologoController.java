@@ -1,6 +1,6 @@
 package dh.backend.clinica.controller;
 
-import dh.backend.clinica.service.OdontologoService;
+import dh.backend.clinica.service.impl.OdontologoService;
 
 public class OdontologoController {
 

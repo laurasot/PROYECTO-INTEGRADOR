@@ -1,11 +1,9 @@
 package dh.backend.clinica.controller;
 
-import dh.backend.clinica.model.Odontologo;
-import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.model.Turno;
-import dh.backend.clinica.service.OdontologoService;
-import dh.backend.clinica.service.PacienteService;
-import dh.backend.clinica.service.TurnoService;
+import dh.backend.clinica.service.impl.OdontologoService;
+import dh.backend.clinica.service.impl.PacienteService;
+import dh.backend.clinica.service.impl.TurnoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
