@@ -1,6 +1,8 @@
 package dh.backend.clinica.controller;
 
 import dh.backend.clinica.model.Turno;
+import dh.backend.clinica.service.IOdontologoService;
+import dh.backend.clinica.service.IPacienteService;
 import dh.backend.clinica.service.impl.OdontologoService;
 import dh.backend.clinica.service.impl.PacienteService;
 import dh.backend.clinica.service.impl.TurnoService;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/turno")
@@ -16,9 +19,9 @@ public class TurnoController {
 
     private TurnoService turnoService;
 
-    private PacienteService pacienteService;
+    private IPacienteService pacienteService;
 
-    private OdontologoService odontologoService;
+    private IOdontologoService odontologoService;
 
     public TurnoController(TurnoService turnoService, PacienteService pacienteService, OdontologoService odontologoService) {
         this.turnoService = turnoService;
@@ -38,9 +41,9 @@ public class TurnoController {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<Turno>  buscarPorId(@PathVariable Integer id){
-        Turno turnoEncontrado = turnoService.buscarPorId(id);
-        if(turnoEncontrado!= null) {
-            return ResponseEntity.ok(turnoEncontrado);
+        Optional<Turno> turnoEncontrado = turnoService.buscarPorId(id);
+        if(turnoEncontrado.isPresent()) {
+            return ResponseEntity.ok(turnoEncontrado.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -48,8 +51,8 @@ public class TurnoController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminarTurno(@PathVariable Integer id){
-        Turno turnoEncontrado = turnoService.buscarPorId(id);
-        if(turnoEncontrado!= null) {
+        Optional<Turno> turnoEncontrado = turnoService.buscarPorId(id);
+        if(turnoEncontrado.isPresent()) {
             turnoService.eliminarTurno(id);
             String jsonResponse = "{\"mensaje\": \"El turno fue eliminado\"}";
             return ResponseEntity.ok(jsonResponse);
@@ -60,8 +63,8 @@ public class TurnoController {
 
     @PutMapping("/modificar")
     public ResponseEntity<String>  modificarTurno(@RequestBody Turno turno){
-        Turno turnoEncontrado = turnoService.buscarPorId(turno.getId());
-        if(turnoEncontrado!= null){
+        Optional<Turno> turnoEncontrado = turnoService.buscarPorId(turno.getId());
+        if(turnoEncontrado.isPresent()){
             turnoService.modificarTurno(turno);
             String jsonResponse = "{\"mensaje\": \"El turno fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);

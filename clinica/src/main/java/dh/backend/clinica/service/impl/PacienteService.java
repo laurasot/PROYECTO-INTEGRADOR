@@ -1,7 +1,6 @@
 package dh.backend.clinica.service.impl;
 
 
-import dh.backend.clinica.dao.IDao;
 import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.repository.IPacienteRepository;
 import dh.backend.clinica.service.IPacienteService;

@@ -1,8 +1,7 @@
 package dh.backend.clinica.service.impl;
 
-import dh.backend.clinica.dao.impl.DaoH2Turno;
-import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.model.Turno;
+import dh.backend.clinica.repository.ITurnoRepository;
 import dh.backend.clinica.service.ITurnoService;
 import org.springframework.stereotype.Service;
 
@@ -12,28 +11,35 @@ import java.util.Optional;
 @Service
 public class TurnoService implements ITurnoService {
 
+    private final ITurnoRepository turnoRepository;
+
+    public TurnoService(ITurnoRepository turnoRepository) {
+        this.turnoRepository = turnoRepository;
+    }
+
     @Override
-    public Turno guardarPaciente(Turno turno) {
-        return null;
+    public Turno guardarTurno(Turno turno) {
+        return turnoRepository.save(turno);
     }
 
     @Override
     public Optional<Turno> buscarPorId(Integer id) {
-        return Optional.empty();
+        return turnoRepository.findById(id);
     }
 
     @Override
     public List<Turno> buscarTodos() {
-        return null;
+        return turnoRepository.findAll();
     }
 
     @Override
-    public void modificarTurnos(Turno turno) {
+    public void modificarTurno(Turno turno) {
+        turnoRepository.save(turno);
 
     }
 
     @Override
     public void eliminarTurno(Integer id) {
-
+        turnoRepository.deleteById(id);
     }
 }
