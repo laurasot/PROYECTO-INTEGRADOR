@@ -19,7 +19,12 @@ public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    //@JsonBackReference(value = "paciente-turno")
     private Paciente paciente;
+
+    @ManyToOne
+    //@JsonBackReference(value = "odontologo-turno")
     private Odontologo odontologo;
     private LocalDate fecha;
 

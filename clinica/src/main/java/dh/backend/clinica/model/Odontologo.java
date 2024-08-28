@@ -1,11 +1,14 @@
 package dh.backend.clinica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dh.backend.clinica.utils.GsonProvider;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -20,6 +23,11 @@ public class Odontologo {
     private String nombre;
     private String apellido;
 
+
+    @OneToMany(mappedBy = "odontologo", cascade = CascadeType.REMOVE)
+    //@JsonManagedReference(value = "odontologo-turno")
+    @JsonIgnore
+    private Set<Turno> turnoSet;
 
     @Override
     public String toString() {

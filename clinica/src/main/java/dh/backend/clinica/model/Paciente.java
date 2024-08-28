@@ -1,6 +1,7 @@
 package dh.backend.clinica.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dh.backend.clinica.utils.GsonProvider;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,8 +27,13 @@ public class Paciente {
     private String nombre;
     private String dni;
     private LocalDate fechaIngreso;
+    @OneToOne(cascade  = CascadeType.ALL)
     private Domicilio domicilio;
 
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE)
+    //@JsonManagedReference(value = "paciente-turno")
+    @JsonIgnore
+    private Set<Turno> turnoSet;
 
 
     @Override

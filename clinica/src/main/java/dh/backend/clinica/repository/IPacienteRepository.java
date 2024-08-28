@@ -1,9 +1,9 @@
 package dh.backend.clinica.repository;
 
-import dh.backend.clinica.model.Domicilio;
+import dh.backend.clinica.model.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IPacienteRepository extends JpaRepository<Domicilio, Integer> {
+public interface IPacienteRepository extends JpaRepository<Paciente, Integer> {
 }
