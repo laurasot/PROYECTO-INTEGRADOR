@@ -1,17 +1,20 @@
 package dh.backend.clinica.service;
 
+import dh.backend.clinica.dto.request.TurnoModifyDto;
+import dh.backend.clinica.dto.request.TurnoReuquestDto;
+import dh.backend.clinica.dto.response.TurnoResponseDto;
 import dh.backend.clinica.model.Turno;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ITurnoService {
-    Turno guardarTurno(Turno turno);
+    TurnoResponseDto guardarTurno(TurnoReuquestDto turnoRequestDto);
 
-    Optional<Turno> buscarPorId(Integer id);
-    List<Turno> buscarTodos();
+    Optional<TurnoResponseDto> buscarPorId(Integer id);
+    List<TurnoResponseDto> buscarTodos();
 
-    void modificarTurno(Turno turno);
+    void modificarTurno(TurnoModifyDto turno);
 
     void eliminarTurno(Integer id);
 }

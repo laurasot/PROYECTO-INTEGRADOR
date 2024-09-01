@@ -1,5 +1,8 @@
 package dh.backend.clinica.controller;
 
+import dh.backend.clinica.dto.request.TurnoModifyDto;
+import dh.backend.clinica.dto.request.TurnoReuquestDto;
+import dh.backend.clinica.dto.response.TurnoResponseDto;
 import dh.backend.clinica.model.Turno;
 import dh.backend.clinica.service.IOdontologoService;
 import dh.backend.clinica.service.IPacienteService;
@@ -30,18 +33,18 @@ public class TurnoController {
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<Turno> guardarTurno(@RequestBody Turno turno){
+    public ResponseEntity<TurnoResponseDto> guardarTurno(@RequestBody TurnoReuquestDto turno){
         return ResponseEntity.ok(turnoService.guardarTurno(turno));
     }
 
     @GetMapping("/buscartodos")
-    public ResponseEntity<List<Turno>>  buscarTodos(){
+    public ResponseEntity<List<TurnoResponseDto>>  buscarTodos(){
         return ResponseEntity.ok(turnoService.buscarTodos());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Turno>  buscarPorId(@PathVariable Integer id){
-        Optional<Turno> turnoEncontrado = turnoService.buscarPorId(id);
+    public ResponseEntity<TurnoResponseDto>  buscarPorId(@PathVariable Integer id){
+        Optional<TurnoResponseDto> turnoEncontrado = turnoService.buscarPorId(id);
         if(turnoEncontrado.isPresent()) {
             return ResponseEntity.ok(turnoEncontrado.get());
         } else {
@@ -51,7 +54,7 @@ public class TurnoController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminarTurno(@PathVariable Integer id){
-        Optional<Turno> turnoEncontrado = turnoService.buscarPorId(id);
+        Optional<TurnoResponseDto> turnoEncontrado = turnoService.buscarPorId(id);
         if(turnoEncontrado.isPresent()) {
             turnoService.eliminarTurno(id);
             String jsonResponse = "{\"mensaje\": \"El turno fue eliminado\"}";
@@ -62,8 +65,8 @@ public class TurnoController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<String>  modificarTurno(@RequestBody Turno turno){
-        Optional<Turno> turnoEncontrado = turnoService.buscarPorId(turno.getId());
+    public ResponseEntity<String>  modificarTurno(@RequestBody TurnoModifyDto turno){
+        Optional<TurnoResponseDto> turnoEncontrado = turnoService.buscarPorId(turno.getId());
         if(turnoEncontrado.isPresent()){
             turnoService.modificarTurno(turno);
             String jsonResponse = "{\"mensaje\": \"El turno fue modificado\"}";
