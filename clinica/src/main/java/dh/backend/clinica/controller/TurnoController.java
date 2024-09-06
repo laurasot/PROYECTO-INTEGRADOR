@@ -19,11 +19,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/turnos")
 public class TurnoController {
-
     private TurnoService turnoService;
-
     private IPacienteService pacienteService;
-
     private IOdontologoService odontologoService;
 
     public TurnoController(TurnoService turnoService, PacienteService pacienteService, OdontologoService odontologoService) {

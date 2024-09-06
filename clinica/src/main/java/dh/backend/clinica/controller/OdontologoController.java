@@ -1,5 +1,6 @@
 package dh.backend.clinica.controller;
 
+import dh.backend.clinica.dto.response.OdontologoResponseDto;
 import dh.backend.clinica.model.Odontologo;
 import dh.backend.clinica.service.impl.OdontologoService;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class OdontologoController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Odontologo> buscarPorId(@PathVariable Integer id){
-        Optional<Odontologo> odontologo = odontologoService.buscarPorId(id);
+    public ResponseEntity<OdontologoResponseDto> buscarPorId(@PathVariable Integer id){
+        Optional<OdontologoResponseDto> odontologo = odontologoService.buscarPorId(id);
         if(odontologo.isPresent()){
             return ResponseEntity.ok(odontologo.get());
         } else {

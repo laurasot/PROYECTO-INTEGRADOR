@@ -1,9 +1,12 @@
 package dh.backend.clinica.service.impl;
 
 
+import dh.backend.clinica.dto.response.PacienteResponseDto;
+import dh.backend.clinica.exception.ResourceNotFoundException;
 import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.repository.IPacienteRepository;
 import dh.backend.clinica.service.IPacienteService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +15,13 @@ import java.util.Optional;
 @Service
 public class PacienteService implements IPacienteService {
 
-    private IPacienteRepository pacienteRepository;
+    private final IPacienteRepository pacienteRepository;
 
-    public PacienteService(IPacienteRepository pacienteRepository) {
+    private final ModelMapper modelMapper;
+
+    public PacienteService(IPacienteRepository pacienteRepository, ModelMapper modelMapper) {
         this.pacienteRepository = pacienteRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -24,8 +30,14 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public Optional<Paciente> buscarPorId(Integer id) {
-        return pacienteRepository.findById(id);
+    public Optional<PacienteResponseDto> buscarPorId(Integer id) {
+        Optional<Paciente> paciente = pacienteRepository.findById(id);
+        if (paciente.isPresent()){
+            PacienteResponseDto pacienteRespuesta = convertirPacienteEnResponse(paciente.get());
+            return Optional.of(pacienteRespuesta);
+        }else {
+            throw new ResourceNotFoundException("El Paciente no fue encontrado");
+        }
     }
 
     @Override
@@ -51,5 +63,10 @@ public class PacienteService implements IPacienteService {
     @Override
     public List<Paciente> buscarPorUnaParteApellido(String parte) {
         return pacienteRepository.buscarPorParteApellido(parte);
+    }
+
+    public PacienteResponseDto convertirPacienteEnResponse(Paciente paciente){
+        PacienteResponseDto pacienteResponseDto = modelMapper.map(paciente, PacienteResponseDto.class);
+        return pacienteResponseDto;
     }
 }

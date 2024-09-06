@@ -1,5 +1,6 @@
 package dh.backend.clinica.controller;
 
+import dh.backend.clinica.dto.response.PacienteResponseDto;
 import dh.backend.clinica.model.Odontologo;
 import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.service.IOdontologoService;
@@ -38,8 +39,8 @@ public class PacienteController {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Paciente>  buscarPorId(@PathVariable Integer id){
-        Optional<Paciente> pacienteEncontrado = pacienteService.buscarPorId(id);
+    public ResponseEntity<PacienteResponseDto>  buscarPorId(@PathVariable Integer id){
+        Optional<PacienteResponseDto> pacienteEncontrado = pacienteService.buscarPorId(id);
         if(pacienteEncontrado.isPresent()) {
             return ResponseEntity.ok(pacienteEncontrado.get());
         } else {
@@ -49,7 +50,7 @@ public class PacienteController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<String> eliminarPaciente(@PathVariable Integer id){
-        Optional<Paciente> pacienteEncontrado = pacienteService.buscarPorId(id);
+        Optional<PacienteResponseDto> pacienteEncontrado = pacienteService.buscarPorId(id);
         if(pacienteEncontrado.isPresent()) {
             pacienteService.eliminarPaciente(id);
             String jsonResponse = "{\"mensaje\": \"El paciente fue eliminado\"}";
@@ -61,7 +62,7 @@ public class PacienteController {
 
     @PutMapping("/modificar")
     public ResponseEntity<String>  modificarPaciente(@RequestBody Paciente paciente){
-        Optional<Paciente>  pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
+        Optional<PacienteResponseDto>  pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
         if(pacienteEncontrado.isPresent()){
             pacienteService.modificarPaciente(paciente);
             String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
