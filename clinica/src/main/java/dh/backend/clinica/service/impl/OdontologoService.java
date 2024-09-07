@@ -3,6 +3,7 @@ package dh.backend.clinica.service.impl;
 import dh.backend.clinica.dto.response.OdontologoResponseDto;
 import dh.backend.clinica.exception.ResourceNotFoundException;
 import dh.backend.clinica.model.Odontologo;
+import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.repository.IOdontologoRepository;
 import dh.backend.clinica.service.IOdontologoService;
 import org.modelmapper.ModelMapper;
@@ -39,9 +40,17 @@ public class OdontologoService  implements IOdontologoService {
         }
 
     }
-
     public OdontologoResponseDto convertirOdontologoEnResponse(Odontologo odontologo){
         OdontologoResponseDto odontologoResponseDto = modelMapper.map(odontologo, OdontologoResponseDto.class);
         return odontologoResponseDto;
+    }
+    public List<Odontologo> buscarTodos() {
+        return odontologoRepository.findAll();
+    }
+    public void eliminarOdontologo(Integer id) {
+        odontologoRepository.deleteById(id);
+    }
+
+    public void modificarOdontologo(Odontologo odontologo) { odontologoRepository.save(odontologo);
     }
 }
