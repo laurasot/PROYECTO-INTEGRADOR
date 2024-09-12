@@ -1,5 +1,7 @@
 package dh.backend.clinica.controller;
 
+import dh.backend.clinica.dto.request.OdontologoModifyDto;
+import dh.backend.clinica.dto.request.OdontologoRequestDto;
 import dh.backend.clinica.dto.response.OdontologoResponseDto;
 import dh.backend.clinica.dto.response.PacienteResponseDto;
 import dh.backend.clinica.model.Odontologo;
@@ -16,14 +18,14 @@ import java.util.Optional;
 @RequestMapping("/odontologos")
 public class OdontologoController {
 
-    private OdontologoService odontologoService;
+    private final OdontologoService odontologoService;
 
     public OdontologoController(OdontologoService odontologoService) {
         this.odontologoService = odontologoService;
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<Odontologo> agregarOdontologo(@RequestBody Odontologo odontologo){
+    public ResponseEntity<OdontologoResponseDto> agregarOdontologo(@RequestBody OdontologoRequestDto odontologo){
         // aca jackson convierte el objeto JSON a un objeto Java "paciente"
         return ResponseEntity.ok(odontologoService.guardarOdontologo(odontologo));
     }
@@ -39,7 +41,7 @@ public class OdontologoController {
     }
 
     @GetMapping("/buscartodos")
-    public ResponseEntity<List<Odontologo>>  buscarTodos() {
+    public ResponseEntity<List<OdontologoResponseDto>>  buscarTodos() {
         return ResponseEntity.ok(odontologoService.buscarTodos());
     }
 
@@ -56,7 +58,7 @@ public class OdontologoController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<String>  modificarOdontologo(@RequestBody Odontologo odontologo){
+    public ResponseEntity<String>  modificarOdontologo(@RequestBody OdontologoModifyDto odontologo){
         Optional<OdontologoResponseDto>  odontologoEncontrado = odontologoService.buscarPorId(odontologo.getId());
         if(odontologoEncontrado.isPresent()){
             odontologoService.modificarOdontologo(odontologo);

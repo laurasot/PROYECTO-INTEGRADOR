@@ -19,4 +19,9 @@ public interface IPacienteService {
 
     List<Paciente> buscarPorApellidoyNombre(String apellido, String nombre);
     List<Paciente> buscarPorUnaParteApellido(String parte);
+
+    List<Paciente> buscarPacientesSinTurno();
+
+    List<Paciente> buscarPacientesPorApellido(String apellido);
+
 }

@@ -2,6 +2,7 @@ package dh.backend.clinica.service.impl;
 
 
 import dh.backend.clinica.dto.response.PacienteResponseDto;
+import dh.backend.clinica.exception.BadRequestException;
 import dh.backend.clinica.exception.ResourceNotFoundException;
 import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.repository.IPacienteRepository;
@@ -26,7 +27,11 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public Paciente guardarPaciente(Paciente paciente) {
-        return pacienteRepository.save(paciente);
+        try{
+            return pacienteRepository.save(paciente);
+        }catch (ResourceNotFoundException e){
+            throw new BadRequestException("No se pudo persistir Paciente");
+        }
     }
 
     @Override
@@ -52,7 +57,11 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public void eliminarPaciente(Integer id) {
-        pacienteRepository.deleteById(id);
+        try{
+            pacienteRepository.deleteById(id);
+        }catch (ResourceNotFoundException e){
+            throw new BadRequestException("El eliminar no se pudo eliminar");
+        }
     }
 
     @Override
@@ -63,6 +72,16 @@ public class PacienteService implements IPacienteService {
     @Override
     public List<Paciente> buscarPorUnaParteApellido(String parte) {
         return pacienteRepository.buscarPorParteApellido(parte);
+    }
+
+    @Override
+    public List<Paciente> buscarPacientesSinTurno() {
+        return pacienteRepository.buscarPacienteSinTurno();
+    }
+
+    @Override
+    public List<Paciente> buscarPacientesPorApellido(String apellido) {
+        return pacienteRepository.findByApellidoContainingIgnoreCase(apellido);
     }
 
     public PacienteResponseDto convertirPacienteEnResponse(Paciente paciente){

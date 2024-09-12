@@ -61,12 +61,9 @@ public class TurnoService implements ITurnoService {
             turno.setFecha(LocalDate.parse(turnoRequestDto.getFecha()));
             turnoDesdeBD = turnoRepository.save(turno);
             turnoResponseDto = convertirTurnoEnResponse(turnoDesdeBD);
-            System.out.println("hola");
-
             return turnoResponseDto;
 
         }catch (ResourceNotFoundException e){
-            System.out.println("no hola");
             throw new BadRequestException("Paciente u odontologo no existen en la base de datos");
         }
     }
@@ -110,7 +107,11 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public void eliminarTurno(Integer id) {
-        turnoRepository.deleteById(id);
+        try{
+            turnoRepository.deleteById(id);
+        } catch (ResourceNotFoundException e){
+            throw new BadRequestException("El turno no se pudo eliminar");
+        }
     }
 
     @Override

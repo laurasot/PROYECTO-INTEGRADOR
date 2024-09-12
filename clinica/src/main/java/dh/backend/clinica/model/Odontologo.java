@@ -34,4 +34,10 @@ public class Odontologo {
         return GsonProvider.getGson().toJson(this);
     }
 
+    public Odontologo(Integer id, String matricula, String nombre, String apellido) {
+        this.id = id;
+        this.matricula = matricula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+    }
 }

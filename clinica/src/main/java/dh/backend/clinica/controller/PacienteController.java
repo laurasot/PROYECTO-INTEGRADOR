@@ -19,8 +19,8 @@ import java.util.Optional;
 @RequestMapping("/paciente")
 public class PacienteController {
 
-    private IPacienteService pacienteService;
-    private IOdontologoService odontologoService;
+    private final IPacienteService pacienteService;
+    private final IOdontologoService odontologoService;
 
 
     public PacienteController(IPacienteService pacienteService, IOdontologoService odontologoService) {
@@ -70,5 +70,15 @@ public class PacienteController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/buscarApellido/{apellido}")
+    public ResponseEntity<List<Paciente>> buscarPacientesPorApellido(@PathVariable String apellido){
+        return ResponseEntity.ok(pacienteService.buscarPacientesPorApellido(apellido));
+    }
+
+    @GetMapping("/sinTurno")
+    public ResponseEntity<List<Paciente>> buscarPacientesSinTurno(){
+        return ResponseEntity.ok(pacienteService.buscarPacientesSinTurno());
     }
 }
