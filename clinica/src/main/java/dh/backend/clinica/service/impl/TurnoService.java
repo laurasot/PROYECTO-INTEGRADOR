@@ -61,6 +61,7 @@ public class TurnoService implements ITurnoService {
             turno.setFecha(LocalDate.parse(turnoRequestDto.getFecha()));
             turnoDesdeBD = turnoRepository.save(turno);
             turnoResponseDto = convertirTurnoEnResponse(turnoDesdeBD);
+            logger.info("Turno persistido {}:", paciente);
             return turnoResponseDto;
 
         }catch (ResourceNotFoundException e){
@@ -73,6 +74,7 @@ public class TurnoService implements ITurnoService {
         Optional<Turno> turno = turnoRepository.findById(id);
         if (turno.isPresent()){
             TurnoResponseDto turnoRespuesta = convertirTurnoEnResponse(turno.get());
+            logger.info("El turno buscado es {}:", turnoRespuesta);
             return Optional.of(turnoRespuesta);
         }else{
             throw new ResourceNotFoundException("El turno no fue encontrado");
@@ -109,6 +111,7 @@ public class TurnoService implements ITurnoService {
     public void eliminarTurno(Integer id) {
         try{
             turnoRepository.deleteById(id);
+            logger.info("turno eliminado");
         } catch (ResourceNotFoundException e){
             throw new BadRequestException("El turno no se pudo eliminar");
         }

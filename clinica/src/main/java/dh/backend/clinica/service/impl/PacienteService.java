@@ -8,6 +8,8 @@ import dh.backend.clinica.model.Paciente;
 import dh.backend.clinica.repository.IPacienteRepository;
 import dh.backend.clinica.service.IPacienteService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService {
-
+    private final Logger logger = LoggerFactory.getLogger(PacienteService.class);
     private final IPacienteRepository pacienteRepository;
 
     private final ModelMapper modelMapper;
@@ -28,7 +30,9 @@ public class PacienteService implements IPacienteService {
     @Override
     public Paciente guardarPaciente(Paciente paciente) {
         try{
-            return pacienteRepository.save(paciente);
+            Paciente pacienteDesdeDB = pacienteRepository.save(paciente);
+            logger.info("Paciente persistido {}:", pacienteDesdeDB );
+            return  pacienteDesdeDB;
         }catch (ResourceNotFoundException e){
             throw new BadRequestException("No se pudo persistir Paciente");
         }
@@ -39,6 +43,7 @@ public class PacienteService implements IPacienteService {
         Optional<Paciente> paciente = pacienteRepository.findById(id);
         if (paciente.isPresent()){
             PacienteResponseDto pacienteRespuesta = convertirPacienteEnResponse(paciente.get());
+            logger.info("El paciente buscado es {}:", pacienteRespuesta);
             return Optional.of(pacienteRespuesta);
         }else {
             throw new ResourceNotFoundException("El Paciente no fue encontrado");

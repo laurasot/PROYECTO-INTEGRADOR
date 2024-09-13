@@ -44,6 +44,7 @@ public class OdontologoService  implements IOdontologoService {
             odontologo.setNombre(odontologo.getNombre());
             Odontologo odontologodesdeDB = odontologoRepository.save(odontologo);
             OdontologoResponseDto odontologoResponseDto = convertirOdontologoEnResponse(odontologodesdeDB);
+            logger.info("odontologo persistido: {} ", odontologo);
             return odontologoResponseDto;
         }catch (ResourceNotFoundException e){
             throw new BadRequestException("No se pudo persistir Odontologo");
@@ -55,6 +56,7 @@ public class OdontologoService  implements IOdontologoService {
         Optional<Odontologo> odontologo = odontologoRepository.findById(id);
         if (odontologo.isPresent()){
             OdontologoResponseDto odontologoRespuesta = convertirOdontologoEnResponse(odontologo.get());
+            logger.info("el odontologo buscado es {}:", odontologo);
             return Optional.of(odontologoRespuesta);
         }else{
             throw new ResourceNotFoundException("El Odontologo no fue encontrado");
@@ -89,6 +91,7 @@ public class OdontologoService  implements IOdontologoService {
                     odontologoModifyDto.getNombre(),
                     odontologoModifyDto.getApellido());
             odontologoRepository.save(odontologo);
+            logger.info(" el odontologo {} fue modificado", odontologo.getId());
         }
     }
 
